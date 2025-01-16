@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dynamic Site 2</title>
+
+<style>
+
+
+/* GLOBAL RULES */
+	html, body { 
+	    height: 100%; /* Ensures everything fills the entire viewport */
+        width: 100%; /* Ensures everything fills the entire viewport */
+	}
+	
+    :root {
+    --side-buffer-width: 2vw; /* Default value */
+    }
+    @media (min-width: 450px) {
+    :root {
+        --side-buffer-width: 10vw;
+    }
+    }
+    @media (min-width: 800px) {
+    :root {
+        --side-buffer-width: 20vw;
+    }
+    }
+    @media (min-width: 1600px) {
+    :root {
+        --side-buffer-width: 30vw;
+    }
+    }
+
+	/* Site Outer Padding Elimination */
+	* { /* "*" is a universal selector */
+	    margin: 0; /* Removes default margins applied by browsers */
+	    padding: 0; /* Removes default padding applied by browsers */
+	    box-sizing: border-box; /* Includes padding and borders within the declared width and height. */	
+	}
+	
+	body, h1, h2, h3, p, div, button, span, a {
+	    white-space: nowrap; /* Prevent wrapping by keeping all content on a single line */
+	    overflow: hidden; /* Hide overflowing content */
+	    text-overflow: ellipsis; /* Add ellipsis (...) for overflowed text */
+		max-width: 100%; /* Limits the width of the element to the container’s width. */
+		max-height: 100%; /* Limits the height of the element to the container’s height. */
+		box-sizing: border-box; /* Ensure padding and border are included in the size limit */
+	}
+
+/* FONT */
+	h1, h2, h3, p {
+	    font-family: Helvetica, Tahoma, sans-serif; /* Default font preferrence order */
+    	}
+	
+	h1 {
+    	font-size: clamp(.7rem, 1.6vw, 2.5rem);
+		margin: calc(0.03vw + 0.03vh);
+    	font-weight: bold;
+	}
+
+	h2 {
+        font-size: clamp(.6rem, 1.4vw, 2.4rem);
+	    margin: calc(0.03vw + 0.03vh);
+	    font-weight: bold; /* Explicit bold styling */
+	}
+
+	h3 {
+        font-size: clamp(.5rem, 1.2vw, 2.3rem);
+	    margin: calc(0.03vw + 0.03vh);
+	    font-weight: bold; /* Explicit bold styling */
+	}
+
+	p {
+	    font-size: clamp(.5rem, 1.2vw, 2.3rem);
+	    margin: calc(0.03vw + 0.03vh);
+	    font-weight: normal; /* Explicit normal styling */
+	}
+
+/* FULL SITE CONTAINER */
+.site-container {
+        font-size: inherit; /* Ensure H1/H2/H3/P inherit */
+        display: flex;
+        flex-direction: column; /* Stack child elements vertically */
+        width: 100%;
+        height: 100%;
+        overflow: auto; /* Ensure content is scrollable if necessary */
+        border: 2px solid red; /* Border for visibility */
+  }
+
+
+/* NAVBAR */
+	/* Navbar Primary Container */
+		.nav-bar {
+        font-size: inherit; /* Ensure H1/H2/H3/P inherit */
+        display: flex;
+		justify-content: center; /* Center contents */
+		align-items: center; /* Center contents */
+		gap: 0; /* Eliminate any implicit gaps between flex items */
+		background-color: black; /* Background Colour */
+		border: 2px solid yellow; /* Border Colour */
+		color: white; /* White Text */
+	    }
+
+	/* Navbar Buffer Containers 1 & 5 */
+		.nav-bar .nav-container:nth-child(1),
+		.nav-bar .nav-container:nth-child(5) {
+            flex: 1 1 auto; /* Allow proportional growth */
+            min-width: var(--side-buffer-min-width); /* Global minimum size */
+            max-width: var(--side-buffer-max-width); /* Global maximum size */
+            top: 0;
+            bottom: 0;
+            border: 2px solid rgb(94, 255, 0); /* Border Colour */
+	    }
+
+	/* Navbar Container 2 */
+	    .nav-bar .nav-container:nth-child(2) {
+	        justify-content: flex-start; /* Justify contents to the left */
+	        flex: 0 1 auto; /* Flex size based on content */
+	        border: 2px solid green; /* Retain visible border */
+	    }
+	
+	/* Navbar Container 3 */
+	    .nav-bar .nav-container:nth-child(3) {
+	        display: flex; /* Ensure it's visible */
+	        justify-content: center; /* Center contents */
+	        align-items: center; /* Align contents */
+	        border: 2px solid orange; /* Ensure visible border */
+	        flex: 1; /* Allow it to grow and shrink */
+	        min-width: 2vw; /* Stop shrinking below the navbar buffer width */
+	    }
+
+	/* Navbar Container 4 */
+	    .nav-bar .nav-container:nth-child(4) {
+	        font-size: inherit; /* Ensure H1/H2/H3/P inherit */
+            display: flex; /* Ensure it's visible */
+	        justify-content: flex-end; /* Justify contents to the right */
+	        align-items: center; /* Align contents */
+	        flex: 0 1 auto; /* Flex size based on content */
+	        border: 2px solid purple; /* Ensure visible border */
+	    }
+
+	/* Navbar Container 4 Buttons */
+	    .nav-bar .nav-container:nth-child(4) button {
+	        font-size: inherit; /* Ensure H1/H2/H3/P inherit */
+            flex: 0 1 auto; /* Flex size based on content */
+	  	  	background-color: black; /* Background colour */
+	        color: white; /* Text Colour */
+	        border: 1px solid #333333ba; /* Border Colour */
+	        padding: 2px 2px; /* Uniform padding for consistent spacing */
+	        border-radius: 5px; /* Slightly rounded corners */
+	        cursor: pointer;
+	        display: flex; /* Ensure content is centered */
+	        justify-content: center;
+	        align-items: center;
+	    }
+
+	    .nav-bar .nav-container:nth-child(4) button.active {
+	        background-color: royalblue; /* Active button color */
+	        color: white; /* Make active button text white */
+	    }
+
+
+/* CONTENT AREA */
+	
+    /* Full content area with Buffers */
+        .content-wrapper {
+            display: flex;
+            flex: 1; /* Allow content-wrapper to grow */
+            width: 100%;
+            overflow: auto; /* Scrollable if necessary */
+            border: 2px solid rgb(181, 58, 230);
+        }
+
+	/* Content Buffers */
+		.content-buffer {
+            flex: 1 1 auto; /* Allow proportional growth */
+            min-width: var(--side-buffer-min-width); /* Global minimum size */
+            max-width: var(--side-buffer-max-width); /* Global maximum size */
+            top: 0;
+            bottom: 0;
+			border: 2px solid rgb(94, 255, 0); /* Border Colour */
+            display: flex; /* Enable Flexbox */
+            flex-direction: column;
+            justify-content: center; /* Center content vertically */
+            align-items: center; /* Center content horizontally */
+            text-align: center; /* Ensure text alignment */
+		}
+    /* Content Area */
+        .content-container {
+            font-size: inherit; /* Ensure H1/H2/H3/P are inhereted */
+            flex: 1; /* Allow main content to grow and shrink */
+            border: 2px solid green; /* Green border for distinction */
+            background-color: transparent; /* Remove background color */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Center content vertically */
+            align-items: center; /* Center content horizontally */
+        }
+
+
+/* VIRTUAL PAGES */
+
+.virtual-page {
+    display: none; /* Default state is hidden */
+}
+
+.virtual-page.active {
+    display: flex; /* Show the active page */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* Collapsed Navbar Button Styling */
+.collapsed-navbar {
+    display: none;
+    font-size: 24px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+/* Show the collapsed navbar button only when viewport width is 420px or less */
+@media (max-width: 420px) {
+    .collapsed-navbar {
+        display: inline-block;
+    }
+}
+
+</style>
+<script>
+// Force reflow on page load to ensure proper layout calculations
+window.addEventListener('load', () => {
+    document.body.style.display = 'none'; // Temporarily hide body
+    document.body.offsetHeight; // Trigger reflow
+    document.body.style.display = ''; // Show body again
+});
+
+
+  function switchPage(pageId) {
+      // Hide all virtual pages
+      const pages = document.querySelectorAll('.virtual-page');
+      pages.forEach(page => page.classList.remove('active'));
+
+      // Show the selected page
+      const targetPage = document.getElementById(pageId);
+      if (targetPage) targetPage.classList.add('active');
+
+      // Update nav button styles
+      document.querySelectorAll('.nav-bar .nav-container:nth-child(4) button').forEach(button => button.classList.remove('active'));
+      const activeButton = Array.from(document.querySelectorAll('.nav-bar .nav-container:nth-child(4) button')).find(button => button.textContent === pageId);
+      if (activeButton) activeButton.classList.add('active');
+  }
+</script>
+  
+</head>
+
+
+<script>
+    function syncBufferWidth() {
+    const navbarBuffer1 = document.querySelector('.nav-bar .nav-container:nth-child(1)');
+    const navbarBuffer5 = document.querySelector('.nav-bar .nav-container:nth-child(5)');
+    const contentBuffers = document.querySelectorAll('.content-buffer');
+
+    if (navbarBuffer1 && navbarBuffer5) {
+        // Get the widths of navbar buffers 1 and 5
+        const bufferWidth1 = parseFloat(getComputedStyle(navbarBuffer1).width);
+        const bufferWidth5 = parseFloat(getComputedStyle(navbarBuffer5).width);
+
+        // Apply the corresponding navbar buffer width to the content buffers
+        const leftContentBuffer = document.querySelector('.content-wrapper .content-buffer:first-child');
+        const rightContentBuffer = document.querySelector('.content-wrapper .content-buffer:last-child');
+
+        if (leftContentBuffer) {
+            leftContentBuffer.style.width = bufferWidth1 + 'px';
+        }
+        if (rightContentBuffer) {
+            rightContentBuffer.style.width = bufferWidth5 + 'px';
+        }
+    }
+}
+
+
+
+
+// Call the function on load, resize, and after DOM updates
+
+window.addEventListener('load', () => {
+    document.body.style.display = 'none'; // Temporarily hide body
+    document.body.offsetHeight; // Trigger reflow
+    document.body.style.display = ''; // Restore body display
+    syncBufferWidth(); // Sync buffers after reflow
+});
+
+window.addEventListener('resize', syncBufferWidth);
+
+
+
+</script>
+
+<script>
+    function updateDimensions() {
+        // Get navbar3 container dimensions
+        const navbar3 = document.querySelector('.nav-bar .nav-container:nth-child(3)');
+        const navbar3Dimensions = document.getElementById('navbar3-dimensions');
+  
+        if (navbar3 && navbar3Dimensions) {
+            const navbar3Width = navbar3.offsetWidth;
+            const navbar3Height = navbar3.offsetHeight;
+            navbar3Dimensions.textContent = `${navbar3Width}px x ${navbar3Height}px`;
+        }
+  
+        // Get Home virtual page dimensions
+        const homePage = document.getElementById('Home');
+        const homeDimensions = document.getElementById('home-dimensions');
+  
+        if (homePage && homeDimensions) {
+            const homeWidth = homePage.offsetWidth;
+            const homeHeight = homePage.offsetHeight;
+            homeDimensions.textContent = `${homeWidth}px x ${homeHeight}px`;
+        }
+  
+        // Get Navbar Buffer 1 dimensions
+        const navbarBuffer1 = document.querySelector('.nav-bar .nav-container:nth-child(1)');
+        const navbarBuffer1Dimensions = document.getElementById('navbar-buffer1-dimensions');
+        if (navbarBuffer1 && navbarBuffer1Dimensions) {
+            const buffer1Width = navbarBuffer1.offsetWidth;
+            const buffer1Height = navbarBuffer1.offsetHeight;
+            navbarBuffer1Dimensions.textContent = `${buffer1Width}px x ${buffer1Height}px`;
+        }
+  
+        // Get Navbar Buffer 5 dimensions
+        const navbarBuffer5 = document.querySelector('.nav-bar .nav-container:nth-child(5)');
+        const navbarBuffer5Dimensions = document.getElementById('navbar-buffer5-dimensions');
+        if (navbarBuffer5 && navbarBuffer5Dimensions) {
+            const buffer5Width = navbarBuffer5.offsetWidth;
+            const buffer5Height = navbarBuffer5.offsetHeight;
+            navbarBuffer5Dimensions.textContent = `${buffer5Width}px x ${buffer5Height}px`;
+        }
+  
+        // Get Content Buffer dimensions
+        const contentBuffer = document.querySelector('.content-buffer');
+        const contentBufferDimensions = document.getElementById('content-buffer-dimensions');
+        if (contentBuffer && contentBufferDimensions) {
+            const bufferWidth = contentBuffer.offsetWidth;
+            const bufferHeight = contentBuffer.offsetHeight;
+            contentBufferDimensions.textContent = `${bufferWidth}px x ${bufferHeight}px`;
+        }
+    }
+  
+// Force a reflow on page load to ensure proper layout calculations
+window.addEventListener('load', () => {
+    document.body.style.display = 'none'; // Temporarily hide body
+    document.body.offsetHeight; // Trigger reflow
+    document.body.style.display = ''; // Restore body display
+    updateDimensions(); // Call updateDimensions after reflow
+});
+
+window.addEventListener('resize', updateDimensions);
+
+  </script>
+  
+  
+
+<body>
+	<div class="site-container">
+	<div class="nav-bar">
+	<div class="nav-container"><p id="navbar-buffer1-dimensions"></p></div> <!-- Left buffer -->
+	<div class="nav-container"><h1 class="site-title">Dynamic Site 2</h1></div> <!-- NavLeft as Site Title -->
+	<div class="nav-container"><p id="navbar3-dimensions"></p> </div> <!-- NavCentre -->
+	<div class="nav-container"> <!-- NavRight -->
+	<button class="active" onclick="switchPage('Home')"><h3>Home</h3></button>
+	<button onclick="switchPage('Create Vendor Request')"><h3>Create Vendor Request</h3></button>
+	<button onclick="switchPage('Data Entry Forms')"><h3>Data Entry Forms</h3></button>
+	<button onclick="switchPage('Progress View')"><h3>Progress View</h3></button>
+	</div>
+	<div class="nav-container"><p id="navbar-buffer5-dimensions"></p></div> <!-- Right buffer -->
+	</div>
+	<div class="content-wrapper">
+	<div class="content-buffer"><p id="content-buffer-dimensions"></p></div> <!-- Left content buffer -->
+	<div class="content-container">
+	<div class="virtual-pages">
+	<div class="virtual-page active" id="Home">
+    <p id="home-dimensions"></p>
+    <h1>H1 Font</h1>
+	<h2>H2 Font</h2>
+	<h3>H3 Font</h3>
+	<p>P Font</p>
+	</div>
+	<div class="virtual-page" id="Create Vendor Request">
+	<h1>Create Vendor Request</h1>
+	</div>
+	<div class="virtual-page" id="Data Entry Forms">
+	<h1>Data Entry Forms</h1>
+	</div>
+	<div class="virtual-page" id="Progress View">
+	<h1>Progress View</h1>
+	</div>
+	</div>
+	</div>
+	<div class="content-buffer"><p id="content-buffer-dimensions"></p></div> <!-- Right content buffer -->
+	</div>
+	</div>
+</body>
+
+</html>
